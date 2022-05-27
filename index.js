@@ -4,11 +4,8 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const app = express();
-const port = process.env.port || 5000;
+const port = process.env.PORT || 5000;
 
-// DB_USER=manufacture_admin
-// DB_PASS=S1XkzzEaCcyI3YxV
-// 32302767969bb8c6b90a19d3f7f7a514a63d89bcd52bfe76ce9d1ba5678dcde58823530ec8c26a42bbaf316c63b408e52496f6b3810d224971e6ae6e316bda6c
 
 app.use(cors());
 app.use(express.json());

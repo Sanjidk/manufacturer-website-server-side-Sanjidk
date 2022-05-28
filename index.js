@@ -37,6 +37,7 @@ async function run() {
     const toolsCollection = client.db('manufacture_tool').collection('tools');
     const orderCollection = client.db('manufacture_tool').collection('orders');
     const userCollection = client.db('manufacture_tool').collection('users');
+    const reviewCollection = client.db('manufacture_tool').collection('review');
 
 
 // Verify Admin...
@@ -90,6 +91,7 @@ async function run() {
     //end admin work
 
 
+// tool collection
 
     app.get('/tool', async (req, res) => {
       const query = {};
@@ -105,6 +107,68 @@ async function run() {
       const item = await toolsCollection.findOne(query);
       res.send(item);
     });
+
+
+    app.delete("/tool/:id", verifyJWT, async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await toolsCollection.deleteOne(query);
+      res.send(result);
+    });
+
+    app.post('/tool',  async (req, res) => {
+      const tool = req.body;
+      const result = await toolsCollection.insertOne(tool);
+      res.send(result);
+    });
+
+
+
+    // order tools
+
+
+    app.get('/order', verifyJWT, async (req, res) => {
+      const orders = await orderCollection.find().toArray();
+      res.send(orders);
+    })
+
+
+    app.post('/order',  async (req, res) => {
+      const order = req.body;
+      const result = await orderCollection.insertOne(order);
+      res.send(result);
+    });
+
+    app.get("/order/:id", verifyJWT, async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await orderCollection.findOne(query);
+      res.send(result);
+    });
+
+    app.delete("/order/:id", verifyJWT, async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await orderCollection.deleteOne(query);
+      res.send(result);
+    });
+
+
+        // order tools end
+
+
+            // start review
+
+            app.post('/review',  async (req, res) => {
+              const review = req.body;
+              const result = await reviewCollection.insertOne(review);
+              res.send(result);
+            });
+
+
+
+
+
 
 
 
